@@ -3,7 +3,7 @@
   <hr>
   <Todo />
   <hr>
-  <Footer class="fixed-bottom"/>
+  <Footer/>
 </template>
 
 <script>

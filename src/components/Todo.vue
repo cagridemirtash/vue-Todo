@@ -47,6 +47,7 @@
 
 <script>
 import axios from 'axios'
+let userID = null;
 export default {
   name: 'Todo',
   data() {
@@ -59,7 +60,6 @@ export default {
   },
   methods : {
     async postTodo(){
-      console.log(new Date())
       let dates= new Date()
       let month = dates.getUTCMonth() + 1
       let day = dates.getUTCDate()
@@ -76,8 +76,10 @@ export default {
           date : currentDate
         },
       }).catch(err => console.log(err))
-      .then( response =>
-      console.log(response))
+      .then( response =>{
+        console.log(response)
+      }
+      )
       
     },
     deleteTodo(todoID){
@@ -87,8 +89,8 @@ export default {
           headers : {
           token: this.token
           }
-        }).then(res =>
-          console.log(res))
+        }).then(
+          res =>console.log(res))
     },
     updateTodo(todoID) {
       axios({
@@ -114,6 +116,8 @@ export default {
       })
       .then( response =>{
         this.token = response.data.token
+        localStorage.setItem("userId", response.data.userId)
+        userID = localStorage.getItem("userId")
       }
       ),
       axios({
@@ -124,18 +128,25 @@ export default {
         }
       }
       ).then( response =>
-        {console.log(response)
+        {
           response.data.body.map((item) => {
-            this.todos.push(item) 
+            this.todos.push(item)
           })
           
         }
       ).catch(err => console.log(err))
-  }
+      ,
+      axios({
+        method : 'get',
+        url : `https://aodapi.eralpsoftware.net/user/${userID}`,
+        headers :{
+          token: this.token
+        }
+      }).then(res => console.log(res))
+  },
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 li {
   list-style: none;
