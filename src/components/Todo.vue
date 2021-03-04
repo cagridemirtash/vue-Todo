@@ -42,6 +42,7 @@
       </ul>
       <p v-if="todos.length == 0">Elimizde hic Todo kalmamis.</p>
     </div>
+    <p>User : {{fullName}}</p>
   </div>
 </template>
 
@@ -55,7 +56,8 @@ export default {
       token : null,
       name : '',
       updateName: '',
-      todos : []
+      todos : [],
+      fullName : null
     }
   },
   methods : {
@@ -142,7 +144,14 @@ export default {
         headers :{
           token: this.token
         }
-      }).then(res => console.log(res))
+      }).then(response =>
+        {
+          response.data.data.map(item =>{
+            this.fullName = item.fullname
+          })
+        }
+        
+      )
   },
 }
 </script>
