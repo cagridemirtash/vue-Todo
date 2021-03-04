@@ -1,4 +1,4 @@
-# normal-vue
+# Vue-Todo
 
 ## Project setup
 ```
